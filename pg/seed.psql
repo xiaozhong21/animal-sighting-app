@@ -27,7 +27,7 @@ SET default_table_access_method = heap;
 CREATE TABLE public.individuals (
     id integer NOT NULL,
     nickname text NOT NULL,
-    species integer NOT NULL,
+    species_id integer NOT NULL,
     created_at timestamp without time zone
 );
 
@@ -53,7 +53,7 @@ ALTER TABLE public.individuals ALTER COLUMN id ADD GENERATED ALWAYS AS IDENTITY 
 CREATE TABLE public.sightings (
     id integer NOT NULL,
     time_seen timestamp without time zone NOT NULL,
-    individual integer NOT NULL,
+    individual_id integer NOT NULL,
     location text NOT NULL,
     healthy boolean,
     sighter_email text,
@@ -107,7 +107,7 @@ ALTER TABLE public.species ALTER COLUMN id ADD GENERATED ALWAYS AS IDENTITY (
 -- Data for Name: individuals; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY public.individuals (id, nickname, species, created_at) FROM stdin;
+COPY public.individuals (id, nickname, species_id, created_at) FROM stdin;
 1	Hello Kitty	1	2001-01-01 12:05:18
 2	Byebye Kitty	1	2006-11-09 14:09:08
 3	Cutie Pie	2	2010-01-01 12:05:18
@@ -121,12 +121,13 @@ COPY public.individuals (id, nickname, species, created_at) FROM stdin;
 -- Data for Name: sightings; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY public.sightings (id, time_seen, individual, location, healthy, sighter_email, created_at) FROM stdin;
+COPY public.sightings (id, time_seen, individual_id, location, healthy, sighter_email, created_at) FROM stdin;
 1	2020-12-20 09:32:45	1	China	t	mary@example.com	2020-12-21 10:00:01
 2	2019-03-06 16:25:34	3	Nepal	f	james@example.com	2019-03-06 20:05:00
 3	2015-07-28 19:38:03	4	Africa	t	nancy@example.com	2015-08-05 06:50:00
 4	2021-09-12 12:00:00	1	37.791278, -122.394680	t	xiao@example.com	2021-09-13 10:00:00
 5	2010-09-10 08:27:01	5	The Great Salt Lake	f	tyler@example.com	2010-09-13 12:09:00
+6	2021-09-13 12:00:00	6	Pearl River	t	misha@example.com	2021-09-13 18:00:05
 \.
 
 
@@ -152,7 +153,7 @@ SELECT pg_catalog.setval('public.individuals_id_seq', 6, true);
 -- Name: sightings_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('public.sightings_id_seq', 5, true);
+SELECT pg_catalog.setval('public.sightings_id_seq', 6, true);
 
 
 --
@@ -160,6 +161,46 @@ SELECT pg_catalog.setval('public.sightings_id_seq', 5, true);
 --
 
 SELECT pg_catalog.setval('public.species_id_seq', 3, true);
+
+
+--
+-- Name: individuals pk_individuals; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.individuals
+    ADD CONSTRAINT pk_individuals PRIMARY KEY (id);
+
+
+--
+-- Name: sightings pk_sightings; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.sightings
+    ADD CONSTRAINT pk_sightings PRIMARY KEY (id);
+
+
+--
+-- Name: species pk_species; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.species
+    ADD CONSTRAINT pk_species PRIMARY KEY (id);
+
+
+--
+-- Name: individuals individuals_species_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.individuals
+    ADD CONSTRAINT individuals_species_fkey FOREIGN KEY (species_id) REFERENCES public.species(id) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- Name: sightings sightings_individual_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.sightings
+    ADD CONSTRAINT sightings_individual_fkey FOREIGN KEY (individual_id) REFERENCES public.individuals(id) ON UPDATE CASCADE ON DELETE CASCADE;
 
 
 --

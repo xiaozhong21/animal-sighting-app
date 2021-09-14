@@ -2,10 +2,12 @@ import express from "express";
 import mime from "mime-types";
 
 import sightingRouter from "./sightingRouter.mjs";
+import individualRouter from "./individualRouter.mjs";
 
 const app = express();
 
 app.use("/api/sightings", sightingRouter);
+app.use("/api/individuals", individualRouter);
 
 app.get("/api/ping", (request, response) =>
   response.json({ response: "pong" }),

@@ -34,6 +34,7 @@ const SightingList = ({ sightings }) => (
           <th>ID</th>
           <th>Time Seen</th>
           <th>Individual ID</th>
+          <th>Nickname</th>
           <th>Location Seen</th>
           <th>Healthy</th>
           <th>Sighter Email</th>
@@ -45,7 +46,8 @@ const SightingList = ({ sightings }) => (
           ({
             id,
             time_seen,
-            individual,
+            individual_id,
+            nickname,
             location,
             healthy,
             sighter_email,
@@ -54,7 +56,8 @@ const SightingList = ({ sightings }) => (
             <tr key={id}>
               <td>{id}</td>
               <td>{time_seen}</td>
-              <td>{individual}</td>
+              <td>{individual_id}</td>
+              <td>{nickname}</td>
               <td>{location}</td>
               <td>{healthy ? "Yes" : "No"}</td>
               <td>{sighter_email}</td>
@@ -72,7 +75,7 @@ const AddSighting = ({ addSighting }) => {
     const form = e.currentTarget;
     const {
       time_seen: { value: time_seen },
-      individual: { value: individual },
+      individual_id: { value: individual_id },
       location: { value: location },
       healthy: { value: healthy },
       sighter_email: { value: sighter_email },
@@ -82,7 +85,7 @@ const AddSighting = ({ addSighting }) => {
     e.preventDefault();
     addSighting({
       time_seen,
-      individual,
+      individual_id,
       location,
       healthy,
       sighter_email,
@@ -91,27 +94,46 @@ const AddSighting = ({ addSighting }) => {
     form.reset();
   };
 
+  const [individuals, setIndividuals] = React.useState([]);
+
+  const loadIndividuals = async () => {
+    setIndividuals(await apiClient.getIndividuals());
+  };
+
+  React.useEffect(() => {
+    loadIndividuals();
+  }, []);
+
+  const individualList = individuals.map((individual) => (
+    <option key={individual.id} value={individual.id}>
+      {individual.id}
+    </option>
+  ));
+
   return (
     <form onSubmit={onSubmit}>
       <label>
         Time seen: <input name="time_seen" required />
       </label>
-      <label>
-        Individual: <input name="individual" required />
-      </label>
+      <label htmlFor="individual_id">Individual ID: </label>
+      <select id="individual_id" name="individual_id" required>
+        {individualList}
+      </select>
       <label>
         Location: <input name="location" required />
       </label>
       <br />
       <br />
+      <label htmlFor="healthy">Healthy: </label>
+      <select id="healthy" name="healthy">
+        <option value="true">Yes</option>
+        <option value="false">No</option>
+      </select>
       <label>
-        Healthy: <input name="healthy" required />
+        Sighter email: <input type="email" name="sighter_email" />
       </label>
       <label>
-        Sighter email: <input name="sighter_email" required />
-      </label>
-      <label>
-        Record creation timestamp: <input name="created_at" required />
+        Record creation timestamp: <input name="created_at" />
       </label>
       <button>Add sighting</button>
     </form>
