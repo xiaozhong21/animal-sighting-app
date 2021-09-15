@@ -5,15 +5,17 @@ const db = initDb();
 
 export const getSightings = () => 
   db.any(
-    `SELECT sightings.*, individuals.nickname
-    FROM sightings
-    LEFT JOIN individuals
-    ON sightings.individual_id = individuals.id`
+    `SELECT si.*, ind.nickname, sp.name
+    FROM sightings si
+    LEFT JOIN individuals ind
+    ON si.individual_id = ind.id
+    LEFT JOIN species sp
+    ON ind.species_id = sp.id`
   );
 
 export const addSighting = (sighting) => 
   db.one(
-    "INSERT INTO sightings(time_seen, individual_id, location, healthy, sighter_email, created_at) VALUES(${time_seen}, ${individual_id}, ${location}, ${healthy}, ${sighter_email}, ${created_at}) RETURNING *",
+    "INSERT INTO sightings(time_seen, individual_id, location, healthy, sighter_email) VALUES(${time_seen}, ${individual_id}, ${location}, ${healthy}, ${sighter_email}) RETURNING *",
     sighting,
   );
 

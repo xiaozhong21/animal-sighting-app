@@ -35,6 +35,7 @@ const SightingList = ({ sightings }) => (
           <th>Time Seen</th>
           <th>Individual ID</th>
           <th>Nickname</th>
+          <th>Species</th>
           <th>Location Seen</th>
           <th>Healthy</th>
           <th>Sighter Email</th>
@@ -48,6 +49,7 @@ const SightingList = ({ sightings }) => (
             time_seen,
             individual_id,
             nickname,
+            name,
             location,
             healthy,
             sighter_email,
@@ -58,6 +60,7 @@ const SightingList = ({ sightings }) => (
               <td>{time_seen}</td>
               <td>{individual_id}</td>
               <td>{nickname}</td>
+              <td>{name}</td>
               <td>{location}</td>
               <td>{healthy ? "Yes" : "No"}</td>
               <td>{sighter_email}</td>
@@ -79,7 +82,6 @@ const AddSighting = ({ addSighting }) => {
       location: { value: location },
       healthy: { value: healthy },
       sighter_email: { value: sighter_email },
-      created_at: { value: created_at },
     } = form.elements;
 
     e.preventDefault();
@@ -89,7 +91,6 @@ const AddSighting = ({ addSighting }) => {
       location,
       healthy,
       sighter_email,
-      created_at,
     });
     form.reset();
   };
@@ -111,32 +112,38 @@ const AddSighting = ({ addSighting }) => {
   ));
 
   return (
-    <form onSubmit={onSubmit}>
-      <label>
-        Time seen: <input name="time_seen" required />
-      </label>
-      <label htmlFor="individual_id">Individual ID: </label>
-      <select id="individual_id" name="individual_id" required>
-        {individualList}
-      </select>
-      <label>
-        Location: <input name="location" required />
-      </label>
-      <br />
-      <br />
-      <label htmlFor="healthy">Healthy: </label>
-      <select id="healthy" name="healthy">
-        <option value="true">Yes</option>
-        <option value="false">No</option>
-      </select>
-      <label>
-        Sighter email: <input type="email" name="sighter_email" />
-      </label>
-      <label>
-        Record creation timestamp: <input name="created_at" />
-      </label>
-      <button>Add sighting</button>
-    </form>
+    <>
+      <h2>Add a New Sighting</h2>
+      <form onSubmit={onSubmit}>
+        <label htmlFor="time_seen">Time seen: </label>
+        <input
+          id="time_seen"
+          name="time_seen"
+          placeholder="1990-01-01 12:00:00"
+          required
+        />
+        <label htmlFor="individual_id">Individual ID: </label>
+        <select id="individual_id" name="individual_id" required>
+          {individualList}
+        </select>
+        <label htmlFor="location">Location: </label>
+        <input id="location" name="location" required />
+        <label htmlFor="healthy">Healthy: </label>
+        <select id="healthy" name="healthy">
+          <option value="true">Yes</option>
+          <option value="false">No</option>
+        </select>
+        <label htmlFor="email">Sighter email: </label>
+        <input id="email" type="email" name="sighter_email" />
+        {/* <label htmlFor="created_at">Record creation timestamp: </label>
+        <input
+          id="created_at"
+          name="created_at"
+          placeholder="1990-01-01 12:00:00"
+        /> */}
+        <button>Add sighting</button>
+      </form>
+    </>
   );
 };
 
