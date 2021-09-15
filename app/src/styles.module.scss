@@ -6,33 +6,31 @@ h1, h2, h3 {
   text-align: center;
 }
 
-form {
-  label {
-    margin-left: 1rem;
-  }
+label {
+  margin-left: 1rem;
+}
 
-  input {
-    margin-left: 0.25rem;
-  }
+input {
+  margin-left: 0.25rem;
+}
 
-  button {
-    background-color: white;
-    border: 2px solid #4CAF50;
-    color: black;
-    padding: 5px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    margin: 4px 10px;
-    transition-duration: 0.4s;
-    cursor: pointer;
-  }
+button {
+  background-color: white;
+  border: 2px solid #4CAF50;
+  color: black;
+  padding: 3px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 10px;
+  transition-duration: 0.4s;
+  cursor: pointer;
+}
 
-  button:hover {
-    background-color: #4CAF50;
-    color: white;
-  }
+button:hover {
+  background-color: #4CAF50;
+  color: white;
 }
 
 table {
@@ -65,4 +63,17 @@ table {
   button {
     margin-left: 0.5rem;
   }
+}
+
+img {
+  width: 20%;
+  margin-left: 40%;
+}
+
+a {
+  margin-left: 46%;
+}
+
+p {
+  margin-left: 44%;
 }

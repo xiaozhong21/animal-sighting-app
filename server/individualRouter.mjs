@@ -9,4 +9,8 @@ individualRouter.get("/", async (request, response) =>
   response.json(await db.getIndividuals()),
 );
 
+individualRouter.get("/:individual_id", async (request, response) => 
+  response.json(await db.getIndividual(request.params.individual_id)),
+);
+
 export default individualRouter;

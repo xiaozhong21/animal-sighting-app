@@ -1,6 +1,7 @@
 import * as React from "react";
 
 import Sightings from "./components/Sightings";
+import "./styles.module.scss";
 
 const App = () => {
   return (

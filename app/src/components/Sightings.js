@@ -4,7 +4,6 @@ import * as apiClient from "../apiClient";
 
 import AddSighting from "./AddSighting";
 import SightingList from "./SightingList";
-import "../styles.module.scss";
 
 const Sightings = () => {
   const [sightings, setSightings] = React.useState([]);

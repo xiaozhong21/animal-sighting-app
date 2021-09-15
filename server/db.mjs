@@ -21,6 +21,12 @@ export const addSighting = (sighting) =>
 
 export const getIndividuals = () => db.any("SELECT id FROM individuals");
 
+export const getIndividual = (individual_id) => {
+  const sql =  `SELECT *  FROM individuals WHERE id=${individual_id}`;
+
+  return db.one(sql, { individual_id })
+}
+
 function initDb() {
   let connection;
 
