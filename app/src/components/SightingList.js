@@ -7,6 +7,7 @@ import AnimalCard from "./AnimalCard";
 const SightingList = ({ sightings }) => {
   const [selectedIndividual, setSelectedIndividual] = React.useState("");
   const [individualDetails, setIndividualDetails] = React.useState({});
+  const [onlyHealthy, setOnlyHealthy] = React.useState(false);
 
   const loadIndividual = React.useCallback(
     () =>
@@ -18,9 +19,16 @@ const SightingList = ({ sightings }) => {
     selectedIndividual !== undefined && loadIndividual();
   }, [selectedIndividual, loadIndividual]);
 
+  const filteredSightings = onlyHealthy
+    ? sightings.filter((sighting) => sighting.healthy)
+    : sightings;
+
+  const handleToggle = () => {
+    setOnlyHealthy(!onlyHealthy);
+  };
+
   return (
     <>
-      <AnimalCard {...{ selectedIndividual, individualDetails }} />
       <section>
         <h2>List of Sightings</h2>
         <table>
@@ -32,14 +40,24 @@ const SightingList = ({ sightings }) => {
               <th>Nickname</th>
               <th>Species</th>
               <th>Location Seen</th>
-              <th>Healthy</th>
+              <th>
+                Healthy
+                <br />
+                (filter by health
+                <input
+                  type="checkbox"
+                  value={onlyHealthy ? "on" : "off"}
+                  onChange={handleToggle}
+                />
+                )
+              </th>
               <th>Sighter Email</th>
               <th>Record Creation Timestamp</th>
               <th>More Details</th>
             </tr>
           </thead>
           <tbody>
-            {sightings.map(
+            {filteredSightings.map(
               ({
                 id,
                 time_seen,
@@ -73,6 +91,7 @@ const SightingList = ({ sightings }) => {
             )}
           </tbody>
         </table>
+        <AnimalCard {...{ selectedIndividual, individualDetails }} />
       </section>
     </>
   );
