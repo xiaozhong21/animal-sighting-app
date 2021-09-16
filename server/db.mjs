@@ -19,7 +19,7 @@ export const addSighting = (sighting) =>
     sighting,
   );
 
-export const getIndividuals = () => db.any("SELECT id FROM individuals");
+export const getIndividuals = () => db.any("SELECT id, nickname FROM individuals");
 
 export const getIndividual = (individual_id) => {
   const sql =  `SELECT *  FROM individuals WHERE id=${individual_id}`;

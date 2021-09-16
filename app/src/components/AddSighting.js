@@ -1,18 +1,6 @@
 import React from "react";
 
-import * as apiClient from "../apiClient";
-
-const AddSighting = ({ addSighting }) => {
-  const [individuals, setIndividuals] = React.useState([]);
-
-  const loadIndividuals = async () => {
-    setIndividuals(await apiClient.getIndividuals());
-  };
-
-  React.useEffect(() => {
-    loadIndividuals();
-  }, []);
-
+const AddSighting = ({ addSighting, individuals }) => {
   const individualList = individuals.map((individual) => (
     <option key={individual.id} value={individual.id}>
       {individual.id}
