@@ -131,6 +131,7 @@ COPY public.sightings (id, time_seen, individual_id, location, healthy, sighter_
 5	2010-09-10 08:27:01	5	The Great Salt Lake	f	tyler@example.com	2010-09-13 12:09:00
 6	2021-09-13 12:00:00	6	Pearl River	t	misha@example.com	2021-09-13 18:00:05
 7	2021-09-12 12:00:00	6	56.43244, -98.312453	f	vivi@example.com	2021-09-13 10:00:00
+8	2020-12-04 12:30:45	2	Yangtzi River	t	jane@example.com	2021-09-15 20:05:58.953995
 \.
 
 
@@ -156,7 +157,7 @@ SELECT pg_catalog.setval('public.individuals_id_seq', 6, true);
 -- Name: sightings_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('public.sightings_id_seq', 7, true);
+SELECT pg_catalog.setval('public.sightings_id_seq', 8, true);
 
 
 --
