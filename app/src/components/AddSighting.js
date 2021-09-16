@@ -3,7 +3,7 @@ import React from "react";
 const AddSighting = ({ addSighting, individuals }) => {
   const individualList = individuals.map((individual) => (
     <option key={individual.id} value={individual.id}>
-      {individual.id}
+      {individual.nickname}
     </option>
   ));
 
@@ -39,7 +39,7 @@ const AddSighting = ({ addSighting, individuals }) => {
           placeholder="1990-01-01 12:00:00"
           required
         />
-        <label htmlFor="individual_id">Individual ID: </label>
+        <label htmlFor="individual_id">Nickname of animal: </label>
         <select id="individual_id" name="individual_id" required>
           {individualList}
         </select>

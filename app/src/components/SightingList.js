@@ -46,9 +46,7 @@ const SightingList = ({ sightings, individuals }) => {
       <table>
         <thead>
           <tr>
-            <th>ID</th>
             <th>Time Seen</th>
-            <th>Individual ID</th>
             <th>
               Nickname
               <select
@@ -94,9 +92,7 @@ const SightingList = ({ sightings, individuals }) => {
               created_at,
             }) => (
               <tr key={id}>
-                <td>{id}</td>
                 <td>{time_seen}</td>
-                <td>{individual_id}</td>
                 <td>{nickname}</td>
                 <td>{name}</td>
                 <td>{location}</td>
