@@ -33,13 +33,7 @@ const AddSighting = ({ addSighting, individuals }) => {
       <h2>Add a New Sighting</h2>
       <form onSubmit={onSubmit}>
         <label htmlFor="time_seen">Time seen: </label>
-        <input
-          id="time_seen"
-          name="time_seen"
-          placeholder="1990-01-01 12:00:00"
-          type="datetime-local"
-          required
-        />
+        <input id="time_seen" name="time_seen" type="datetime-local" required />
         <label htmlFor="individual_id">Nickname of animal: </label>
         <select id="individual_id" name="individual_id" required>
           {individualList}

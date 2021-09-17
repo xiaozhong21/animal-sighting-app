@@ -24,10 +24,6 @@ const SightingList = ({ sightings, individuals }) => {
     ? sightings.filter((sighting) => sighting.healthy)
     : sightings;
 
-  const handleToggle = () => {
-    setDisplayHealthyOnly(!displayHealthyOnly);
-  };
-
   const nicknameList = individuals.map((individual) => (
     <option key={individual.id} value={individual.nickname}>
       {individual.nickname}
@@ -69,7 +65,7 @@ const SightingList = ({ sightings, individuals }) => {
               <input
                 type="checkbox"
                 value={displayHealthyOnly ? "on" : "off"}
-                onChange={handleToggle}
+                onChange={() => setDisplayHealthyOnly(!displayHealthyOnly)}
               />
               )
             </th>
