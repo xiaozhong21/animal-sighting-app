@@ -37,6 +37,7 @@ const AddSighting = ({ addSighting, individuals }) => {
           id="time_seen"
           name="time_seen"
           placeholder="1990-01-01 12:00:00"
+          type="datetime-local"
           required
         />
         <label htmlFor="individual_id">Nickname of animal: </label>
