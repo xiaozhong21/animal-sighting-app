@@ -3,15 +3,14 @@
 
 This is a full-stack PERN animal tracking app built with React frontend, Node/Express backend, and Postgres database (PERN). The project is based on these [Techtonica requirements](https://github.com/Techtonica/curriculum/blob/main/projects/mern-pern-project.md).
 
+[Live site on Heroku](https://animal-sighting-app21.herokuapp.com/)
+
 ## Features implemented
 - Display a list of sightings with columns pulled from associated tables
 - Add new sighting with animal nickname field auto-populated
 - Filter sightings by animal health condition
 - Filter sightings by animal nicknames
 - Animal details rendered upon click
-
-
-### [Live site on Heroku](https://animal-sighting-app21.herokuapp.com/)
 
 
 [![Deploy to Heroku][deploy-badge]][deploy-workflow]
