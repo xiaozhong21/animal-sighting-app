@@ -2,8 +2,8 @@
 -- PostgreSQL database dump
 --
 
--- Dumped from database version 13.3
--- Dumped by pg_dump version 13.3
+-- Dumped from database version 13.4
+-- Dumped by pg_dump version 13.4
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -21,68 +21,191 @@ SET default_tablespace = '';
 SET default_table_access_method = heap;
 
 --
--- Name: tasks; Type: TABLE; Schema: public; Owner: -
+-- Name: individuals; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE public.tasks (
+CREATE TABLE public.individuals (
     id integer NOT NULL,
-    name text
+    nickname text NOT NULL,
+    species_id integer NOT NULL,
+    created_at timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
+    img_url text,
+    wiki_url text
 );
 
 
 --
--- Name: tasks_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+-- Name: individuals_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
-CREATE SEQUENCE public.tasks_id_seq
-    AS integer
+ALTER TABLE public.individuals ALTER COLUMN id ADD GENERATED ALWAYS AS IDENTITY (
+    SEQUENCE NAME public.individuals_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
     NO MAXVALUE
-    CACHE 1;
+    CACHE 1
+);
 
 
 --
--- Name: tasks_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+-- Name: sightings; Type: TABLE; Schema: public; Owner: -
 --
 
-ALTER SEQUENCE public.tasks_id_seq OWNED BY public.tasks.id;
+CREATE TABLE public.sightings (
+    id integer NOT NULL,
+    time_seen timestamp without time zone NOT NULL,
+    individual_id integer NOT NULL,
+    location text NOT NULL,
+    healthy boolean,
+    sighter_email text,
+    created_at timestamp without time zone DEFAULT CURRENT_TIMESTAMP
+);
 
 
 --
--- Name: tasks id; Type: DEFAULT; Schema: public; Owner: -
+-- Name: sightings_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY public.tasks ALTER COLUMN id SET DEFAULT nextval('public.tasks_id_seq'::regclass);
+ALTER TABLE public.sightings ALTER COLUMN id ADD GENERATED ALWAYS AS IDENTITY (
+    SEQUENCE NAME public.sightings_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1
+);
 
 
 --
--- Data for Name: tasks; Type: TABLE DATA; Schema: public; Owner: -
+-- Name: species; Type: TABLE; Schema: public; Owner: -
 --
 
-COPY public.tasks (id, name) FROM stdin;
-1	🙏 Be nice when you add test entries
-2	⏲ Added entries will be reset every Sunday
-3	End white supremacy
-4	Advocate for living wage
-5	Provide universal health care
+CREATE TABLE public.species (
+    id integer NOT NULL,
+    name text NOT NULL,
+    scientific_name text NOT NULL,
+    estimated_number integer,
+    status_code text,
+    created_at timestamp without time zone DEFAULT CURRENT_TIMESTAMP
+);
+
+
+--
+-- Name: species_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+ALTER TABLE public.species ALTER COLUMN id ADD GENERATED ALWAYS AS IDENTITY (
+    SEQUENCE NAME public.species_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1
+);
+
+
+--
+-- Data for Name: individuals; Type: TABLE DATA; Schema: public; Owner: -
+--
+
+COPY public.individuals (id, nickname, species_id, created_at, img_url, wiki_url) FROM stdin;
+1	Hello Kitty	1	2001-01-01 12:05:18	https://images.unsplash.com/photo-1561731216-c3a4d99437d5?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=700&q=80	https://en.wikipedia.org/wiki/Tiger
+2	Byebye Kitty	1	2006-11-09 14:09:08	https://images.unsplash.com/photo-1562552476-8ac59b2a2e46?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1055&q=80	https://en.wikipedia.org/wiki/Tiger
+3	Cutie Pie	2	2010-01-01 12:05:18	https://images.unsplash.com/photo-1590692464430-5f55e7221c94?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80	https://en.wikipedia.org/wiki/Red_panda
+4	Pumpkin Pie	2	2011-04-15 18:25:56	https://images.unsplash.com/photo-1562599674-8136e19bd076?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=564&q=80	https://en.wikipedia.org/wiki/Red_panda
+5	Fluffy Head	3	2009-08-10 03:09:10	https://images.unsplash.com/photo-1522609885-3902c3d44d6a?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=675&q=80	https://en.wikipedia.org/wiki/Sea_otter
+6	Sleepy Head	3	2012-12-21 06:17:28	https://images.unsplash.com/photo-1576518985746-7b3924507c48?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80	https://en.wikipedia.org/wiki/Sea_otter
 \.
 
 
 --
--- Name: tasks_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
+-- Data for Name: sightings; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('public.tasks_id_seq', 5, true);
+COPY public.sightings (id, time_seen, individual_id, location, healthy, sighter_email, created_at) FROM stdin;
+1	2020-12-20 09:32:45	1	China	t	mary@example.com	2020-12-21 10:00:01
+2	2019-03-06 16:25:34	3	Nepal	f	james@example.com	2019-03-06 20:05:00
+3	2015-07-28 19:38:03	4	Africa	t	nancy@example.com	2015-08-05 06:50:00
+4	2021-09-12 12:00:00	1	37.791278, -122.394680	t	xiao@example.com	2021-09-13 10:00:00
+5	2010-09-10 08:27:01	5	The Great Salt Lake	f	tyler@example.com	2010-09-13 12:09:00
+6	2021-09-13 12:00:00	6	Pearl River	t	misha@example.com	2021-09-13 18:00:05
+7	2021-09-12 12:00:00	6	56.43244, -98.312453	f	vivi@example.com	2021-09-13 10:00:00
+8	2020-12-04 12:30:45	2	Yangtzi River	t	jane@example.com	2021-09-15 20:05:58.953995
+9	2020-12-04 12:30:45	1	Pearl River	t	misha@example.com	2021-09-16 16:32:17.102555
+\.
 
 
 --
--- Name: tasks tasks_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Data for Name: species; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY public.tasks
-    ADD CONSTRAINT tasks_pkey PRIMARY KEY (id);
+COPY public.species (id, name, scientific_name, estimated_number, status_code, created_at) FROM stdin;
+1	Tiger	Panthera tigris	5000	VU	2000-10-12 13:06:35
+2	Red panda	Ailurus fulgens	500	CR	2008-11-22 04:19:00
+3	Sea otter	Enhydra lutris	1000	EN	2005-08-14 14:23:35
+\.
+
+
+--
+-- Name: individuals_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
+--
+
+SELECT pg_catalog.setval('public.individuals_id_seq', 6, true);
+
+
+--
+-- Name: sightings_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
+--
+
+SELECT pg_catalog.setval('public.sightings_id_seq', 9, true);
+
+
+--
+-- Name: species_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
+--
+
+SELECT pg_catalog.setval('public.species_id_seq', 3, true);
+
+
+--
+-- Name: individuals pk_individuals; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.individuals
+    ADD CONSTRAINT pk_individuals PRIMARY KEY (id);
+
+
+--
+-- Name: sightings pk_sightings; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.sightings
+    ADD CONSTRAINT pk_sightings PRIMARY KEY (id);
+
+
+--
+-- Name: species pk_species; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.species
+    ADD CONSTRAINT pk_species PRIMARY KEY (id);
+
+
+--
+-- Name: individuals individuals_species_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.individuals
+    ADD CONSTRAINT individuals_species_fkey FOREIGN KEY (species_id) REFERENCES public.species(id) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- Name: sightings sightings_individual_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.sightings
+    ADD CONSTRAINT sightings_individual_fkey FOREIGN KEY (individual_id) REFERENCES public.individuals(id) ON UPDATE CASCADE ON DELETE CASCADE;
 
 
 --

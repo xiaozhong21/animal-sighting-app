@@ -1,33 +1,15 @@
 import * as React from "react";
 
-import { Routes, Route, Link } from "react-router-dom";
+import Sightings from "./components/Sightings";
+import "./styles.module.scss";
 
-import Tasks from "./Tasks";
-
-const App = () => (
-  <main>
-    <nav>
-      <Link to="/">Home</Link> | <Link to="dashboard">Dashboard</Link>
-    </nav>
-    <Routes>
-      <Route path="/" element={<Home />} />
-      <Route path="/dashboard" element={<Dashboard />} />
-    </Routes>
-  </main>
-);
-
-const Home = () => (
-  <>
-    <h1>{process.env.REACT_APP_TITLE}</h1>
-    <h2>{process.env.REACT_APP_SUBTITLE}</h2>
-    <Tasks />
-  </>
-);
-
-const Dashboard = () => (
-  <>
-    <h1>Dashboard</h1>
-  </>
-);
+const App = () => {
+  return (
+    <main>
+      <h1>Animal Sighting Tracker</h1>
+      <Sightings />
+    </main>
+  );
+};
 
 export default App;
